@@ -10,4 +10,4 @@ For this calendar i've used:
 - Airbnb linter
 
 This task is deployed on: 
-[NETLIFY DEPLOYMENT](https://601abc8b27434200084fbc96--dazzling-einstein-321d3a.netlify.app/index.html)
+[NETLIFY DEPLOYMENT](https://dazzling-einstein-321d3a.netlify.app/index.html)

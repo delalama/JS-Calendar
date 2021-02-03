@@ -60,9 +60,9 @@ function deleteEvent() {
       if (eventToBeDelete.day === events[i].day && eventToBeDelete.time === events[i].time) {
         deleteBook(events[i]);
         events.splice(i, 1);
+        i = events.length;
       }
     }
-    events.splice(1, 1);
     sessionStorage.setItem('events', JSON.stringify(events));
   } else {
     deleteBook(events);
