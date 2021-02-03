@@ -60,12 +60,12 @@ function deleteEvent() {
         events.splice(i, 1);
       }
     }
+    events.splice(1, 1);
+    sessionStorage.setItem('events', JSON.stringify(events));
   } else {
     deleteBook(events);
-    events.splice(1, 1);
+    sessionStorage.removeItem('events');
   }
-
-  sessionStorage.setItem('events', JSON.stringify(events));
 
   cancelDelete();
 }
