@@ -1,8 +1,3 @@
-Bootstrap-Blank-Template
-========================
+CIKLUM CALENDAR 
+BY Jesús de la Lama Amengual
 
-Quick repo to clone for Bootstrap proofs-of-concept
-
-**Usage:**
-
-    git clone https://github.com/dhilowitz/Bootstrap-Blank-Template.git
