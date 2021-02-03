@@ -43,6 +43,8 @@ function drawSavedEvents() {
     for (let i = 0; i < events.length; i++) {
       draw(events[i]);
     }
+  } else if (events == null) {
+    window.console.log('empty events, no action');
   } else {
     events = JSON.parse(sessionStorage.getItem('events'));
     draw(events);
