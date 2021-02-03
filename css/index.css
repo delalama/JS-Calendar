@@ -26,6 +26,18 @@ option {
   border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
+.noBordered{
+    border: none;
+}
+
+/* Event screen */
+.eventDiv{
+    padding-bottom: 2em;
+}
+ .eventBorderedField{
+    border: 3px solid black;
+ }
+
 .eventScreenBtn {
     width: 90%;
     height: 3.5em;

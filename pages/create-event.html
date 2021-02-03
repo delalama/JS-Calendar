@@ -24,15 +24,15 @@
   <body>
     <div class="container">
       <div class="row">
-        <div class="col-xs-12">
-          <div class="form-group row">
-            <label for="inputEventName" class="col-sm-2 col-form-label"
+        <div class="col-12">
+          <div class="form-group row eventDiv noBordered">
+            <label for="inputEventName" class="col-3 col-form-label"
               >Name of the event:
             </label>
-            <div class="col-sm-6">
+            <div class="col-4 eventBorderedField">
               <input
                 type="text"
-                class="form-control"
+                class="form-control noBordered"
                 id="inputName"
                 placeholder="Event name"
               />
@@ -40,11 +40,11 @@
           </div>
 
           <!--Participants -->
-          <div class="form-group row">
-            <label for="inputParticipants" class="col-sm-2 col-form-label"
+          <div class="form-group row eventDiv" >
+            <label for="inputParticipants" class="col-3 col-form-label"
               >Participants:
             </label>
-            <div class="col-sm-6" id="inputParticipants">
+            <div class="col-4 eventBorderedField" id="inputParticipants">
               <div class="form-check form-check-inline">
                 <input
                   class="form-check-input"
@@ -93,9 +93,9 @@
           </div>
 
           <!--Day -->
-          <div class="form-group row">
-            <label for="inputDay" class="col-sm-2 col-form-label">Day: </label>
-            <div class="col-sm-6">
+          <div class="form-group row eventDiv">
+            <label for="inputDay" class="col-3 col-form-label">Day: </label>
+            <div class="col-4 eventBorderedField">
               <select class="custom-select mb-3" id="inputDay">
                 <option selected>Select day</option>
                 <option value="1">Monday</option>
@@ -108,11 +108,11 @@
           </div>
 
           <!--Time -->
-          <div class="form-group row">
-            <label for="inputTime" class="col-sm-2 col-form-label"
+          <div class="form-group row eventDiv">
+            <label for="inputTime" class="col-3 col-form-label"
               >Time:
             </label>
-            <div class="col-sm-6">
+            <div class="col-4 eventBorderedField">
               <select class="custom-select mb-3" id="inputTime">
                 <option selected>Select time</option>
                 <option value="1">10:00</option>
@@ -131,7 +131,7 @@
 
         <!--Cancel button -->
         <div class="row">
-          <div class="col-6 d-flex justify-content-end">
+          <div class="col-10 d-flex justify-content-end">
             <div class="col-3">
               <input
                 type="button"
