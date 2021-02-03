@@ -161,6 +161,10 @@ function confirmEvent() {
 
     checkAvailability(event);
 
+    if (error === true) {
+      throw new Error('User error');
+    }
+
     function blinkElement(element) {
       error = true;
       document.getElementById(element).classList.add('blink_me');
