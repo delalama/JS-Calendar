@@ -280,11 +280,6 @@ const modal = document.getElementById('myModal');
 // Get the button that opens the modal
 const btn = document.getElementById('myBtn');
 
-// When the user clicks on the button, open the modal
-btn.onclick = function onClickOnModalBtn() {
-  modal.style.display = 'block';
-};
-
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function onClickOutside(event) {
   if (event.target == modal) {
