@@ -3,7 +3,7 @@
 /* eslint-disable no-plusplus */
 
 /**
- *
+ * Calendar screen functions
  */
 function refreshTable() {
   drawSavedEvents();
@@ -71,32 +71,57 @@ function deleteEvent() {
 }
 
 function setEvent() {
-  const eventName = sessionStorage.getItem('eventName');
-  const eventParticipants = sessionStorage.getItem('participants');
-  const eventDay = sessionStorage.getItem('day');
   const eventTime = sessionStorage.getItem('time');
 
   const timeSelector = `#${eventTime}`;
-  document.getElementById(timeSelector).innerHTML = 'lefazo';
+  document.getElementById(timeSelector).innerHTML = '';
 }
 
 function cancelEvent() {
   sessionStorage.setItem('newEventSet', false);
-  location.href = '../index.html';
+  window.location.href = '../index.html';
 }
 
-/**
+function filterEvents() {
+  const member = document.getElementById('memberFilter').value;
+  if (member === 'All members') {
+    refreshTable();
+  } else {
+    filterByMember(member);
+  }
+
+  function filterByMember() {
+    const events = JSON.parse(sessionStorage.getItem('events'));
+
+    if (Array.isArray(events)) {
+      events.forEach((event) => {
+        drawOrDeleteEvent(event);
+      });
+    } else {
+      drawOrDeleteEvent(events);
+    }
+  }
+
+  function drawOrDeleteEvent(event) {
+    if (eventIncludesMember(event, member)) {
+      draw(event);
+    } else {
+      deleteBook(event);
+    }
+  }
+}
+
+/** Event creation screen functions
  * Set event data on sesssionStorage
  */
 function confirmEvent() {
-  // event object
   const event = new EventObject(getById('inputName'), getParticipants(), getById('inputDay'), getById('inputTime'));
 
   handleEventErrors(event);
   saveEventData();
 
   // navigate to calendar
-  location.href = '../index.html';
+  window.location.href = '../index.html';
 
   function getParticipants() {
     const participants = [];
@@ -148,24 +173,24 @@ function confirmEvent() {
     }
 
     function checkAvailability(event) {
-      const candidateBook = new book(event.day, `time${event.time}`);
+      const candidateBook = new Book(event.day, `time${event.time}`);
 
       const savedEvents = JSON.parse(sessionStorage.getItem('events'));
 
       // Multiple events
       if (Array.isArray(savedEvents)) {
         for (i = 0; i < savedEvents.length; i++) {
-          const dataBooked = new book(savedEvents[i].day, savedEvents[i].time);
-          compareBooks(candidateBook, dataBooked);
+          const dataBooked = new Book(savedEvents[i].day, savedEvents[i].time);
+          compareEvents(candidateBook, dataBooked);
         }
         // Single event
       } else if (savedEvents !== null) {
-        const dataBooked = new book(savedEvents.day, savedEvents.time);
-        compareBooks(candidateBook, dataBooked);
+        const dataBooked = new Book(savedEvents.day, savedEvents.time);
+        compareEvents(candidateBook, dataBooked);
       }
     }
 
-    function compareBooks(candidateBook, dataBooked) {
+    function compareEvents(candidateBook, dataBooked) {
       if (dataBooked.day === candidateBook.day && dataBooked.time === candidateBook.time) {
         document.getElementById('alertDiv').style.visibility = 'visible';
 
@@ -186,7 +211,6 @@ function confirmEvent() {
     const eventData = new EventObject(getById('inputName'), getParticipants(), getById('inputDay'), `time${getById('inputTime')}`);
 
     // add Event on Session Storage
-    sessionStorage.setItem('newEventSet', true);
     const previousEvents = [];
 
     if (sessionStorage.getItem('events') !== null) {
@@ -207,37 +231,8 @@ function confirmEvent() {
   }
 }
 
-function filterBooks() {
-  const member = document.getElementById('memberFilter').value;
-  if (member === 'All members') {
-    refreshTable();
-  } else {
-    filterByMember(member);
-  }
-
-  function filterByMember(member) {
-    const events = JSON.parse(sessionStorage.getItem('events'));
-
-    if (Array.isArray(events)) {
-      events.forEach((event) => {
-        drawOrDeleteEvent(event);
-      });
-    } else {
-      drawOrDeleteEvent(events);
-    }
-  }
-
-  function drawOrDeleteEvent(event) {
-    if (eventIncludesMember(event, member)) {
-      draw(event);
-    } else {
-      deleteBook(event);
-    }
-  }
-}
-
-function eventIncludesMember(book, member) {
-  if (book.participants.includes(member)) {
+function eventIncludesMember(event, member) {
+  if (event.participants.includes(member)) {
     return true;
   }
   return false;
@@ -271,13 +266,13 @@ function EventObject(name, participants, day, time) {
   this.time = time;
 }
 
-function book(day, time) {
+function Book(day, time) {
   this.day = day;
   this.time = time;
 }
 
 /**
- * Modal
+ * Modal functions
  */
 // Get the modal
 const modal = document.getElementById('myModal');
@@ -286,12 +281,12 @@ const modal = document.getElementById('myModal');
 const btn = document.getElementById('myBtn');
 
 // When the user clicks on the button, open the modal
-btn.onclick = function () {
+btn.onclick = function onClickOnModalBtn() {
   modal.style.display = 'block';
 };
 
 // When the user clicks anywhere outside of the modal, close it
-window.onclick = function (event) {
+window.onclick = function onClickOutside(event) {
   if (event.target == modal) {
     modal.style.display = 'none';
   }
