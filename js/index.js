@@ -80,7 +80,6 @@ function setEvent() {
 }
 
 function cancelEvent() {
-  sessionStorage.setItem('newEventSet', false);
   window.location.href = '../index.html';
 }
 
@@ -161,10 +160,6 @@ function confirmEvent() {
     }
 
     checkAvailability(event);
-
-    if (error === true) {
-      throw new Error();
-    }
 
     function blinkElement(element) {
       error = true;
