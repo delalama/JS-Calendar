@@ -11,7 +11,7 @@ function refreshTable() {
 
 function draw(event) {
   // deserialize event
-  const eventToDraw = new eventObject(event.name, event.participants, event.day, event.time);
+  const eventToDraw = new EventObject(event.name, event.participants, event.day, event.time);
 
   // create selector
   const element = document.getElementById(eventToDraw.time).children[eventToDraw.day];
@@ -26,7 +26,7 @@ function draw(event) {
     document.getElementById('eventDataPrompt').innerHTML = ` ${event.name} event ?`;
     sessionStorage.setItem('eventToRemove', JSON.stringify(event));
     modal.style.display = 'block';
-}
+  }
 }
 
 function drawSavedEvents() {
@@ -53,12 +53,18 @@ function deleteEvent() {
   const eventToBeDelete = JSON.parse(sessionStorage.getItem('eventToRemove'));
   const events = JSON.parse(sessionStorage.getItem('events'));
 
-  for (i = 0; i < events.length; i++) {
-    if (eventToBeDelete.day === events[i].day && eventToBeDelete.time === events[i].time) {
-      deleteBook(events[i]);
-      events.splice(i, 1);
+  if (Array.isArray(events)) {
+    for (i = 0; i < events.length; i++) {
+      if (eventToBeDelete.day === events[i].day && eventToBeDelete.time === events[i].time) {
+        deleteBook(events[i]);
+        events.splice(i, 1);
+      }
     }
+  } else {
+    deleteBook(events);
+    events.splice(i, 1);
   }
+
   sessionStorage.setItem('events', JSON.stringify(events));
 
   cancelDelete();
@@ -84,7 +90,7 @@ function cancelEvent() {
  */
 function confirmEvent() {
   // event object
-  const event = new eventObject(getById('inputName'), getParticipants(), getById('inputDay'), getById('inputTime'));
+  const event = new EventObject(getById('inputName'), getParticipants(), getById('inputDay'), getById('inputTime'));
 
   handleEventErrors(event);
   saveEventData();
@@ -149,12 +155,12 @@ function confirmEvent() {
       // Multiple events
       if (Array.isArray(savedEvents)) {
         for (i = 0; i < savedEvents.length; i++) {
-          let dataBooked = new book(savedEvents[i].day, savedEvents[i].time);
+          const dataBooked = new book(savedEvents[i].day, savedEvents[i].time);
           compareBooks(candidateBook, dataBooked);
         }
         // Single event
       } else if (savedEvents !== null) {
-        let dataBooked = new book(savedEvents.day, savedEvents.time);
+        const dataBooked = new book(savedEvents.day, savedEvents.time);
         compareBooks(candidateBook, dataBooked);
       }
     }
@@ -177,7 +183,7 @@ function confirmEvent() {
 
   function saveEventData() {
     // get event data
-    const eventData = new eventObject(getById('inputName'), getParticipants(), getById('inputDay'), `time${getById('inputTime')}`);
+    const eventData = new EventObject(getById('inputName'), getParticipants(), getById('inputDay'), `time${getById('inputTime')}`);
 
     // add Event on Session Storage
     sessionStorage.setItem('newEventSet', true);
@@ -235,7 +241,6 @@ function eventIncludesMember(book, member) {
     return true;
   }
   return false;
-
 }
 
 function deleteBook(book) {
@@ -259,7 +264,7 @@ function deleteSessionStorage() {
 /**
  * Classes
  */
-function eventObject(name, participants, day, time) {
+function EventObject(name, participants, day, time) {
   this.name = name;
   this.participants = participants;
   this.day = day;
