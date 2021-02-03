@@ -1,10 +1,10 @@
-CIKLUM CALENDAR 
-BY Jesús de la Lama Amengual
+# CIKLUM CALENDAR 
+
+By Jesús de la Lama Amengual
+
 
 For this calendar i've used:
-html
-bootstrap 5
-js
-
-no external libraries
-Airbnb linter
+- html
+- bootstrap 5
+- js
+- Airbnb linter
